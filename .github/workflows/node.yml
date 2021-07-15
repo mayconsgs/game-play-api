@@ -1,0 +1,30 @@
+name: Node checkout
+
+on: [push]
+
+jobs:
+  build:
+    name: Run Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - run: npm ci
+      - run: npm run build
+
+  test:
+    name: Run Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - run: npm ci
+      - run: npm test
+        env:
+          JWT_SECRET: "super-secret-jwt"
+          SECRET_SESSION: "super-secret-session"
+          DB_CLIENT: "sqlite3"
