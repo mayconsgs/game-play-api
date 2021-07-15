@@ -10,28 +10,14 @@ interface SchemaInterface {
 
 const schemas: SchemaInterface[] = [
   {
-    path: "/",
-    method: "GET",
-  },
-  {
-    path: "/users",
-    method: "GET",
-  },
-  {
-    path: "/user",
-    method: "GET",
-    query: Joi.object({
-      userId: Joi.string().uuid().required(),
-    }),
-  },
-  {
-    path: "/user",
+    path: "/event",
     method: "POST",
     body: Joi.object({
-      firstName: Joi.string().required(),
-      lastName: Joi.string().required(),
-      email: Joi.string().email().required(),
-      password: Joi.string().required(),
+      idGuild: Joi.string().required(),
+      idOwner: Joi.string().required(),
+      schedule: Joi.date().required(),
+      category: Joi.string().valid("ranked", "joke", "duel"),
+      description: Joi.string().max(100),
     }),
   },
 ];
