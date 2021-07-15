@@ -15,7 +15,7 @@ describe("POST /event", () => {
         category: "ranked",
         description: faker.lorem.text(),
       })
-      .expect(201)
+      .expect(204)
       .expect((response) => {
         expect(response.body).toHaveProperty("id");
       })
