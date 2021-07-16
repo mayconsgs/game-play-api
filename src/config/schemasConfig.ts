@@ -18,6 +18,7 @@ const schemas: SchemaInterface[] = [
       schedule: Joi.date().required(),
       category: Joi.string().valid("ranked", "joke", "duel"),
       description: Joi.string().max(100),
+      participants: Joi.array().items(Joi.string().required()).required(),
     }),
   },
 ];
