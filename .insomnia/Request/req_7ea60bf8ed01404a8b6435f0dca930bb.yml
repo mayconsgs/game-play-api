@@ -1,0 +1,36 @@
+_id: req_7ea60bf8ed01404a8b6435f0dca930bb
+type: Request
+parentId: wrk_3add7e390f9049039818d2909f7912ca
+modified: 1626479242547
+created: 1626479179235
+url: "{{ _.baseUrl }}/events"
+name: Create Event
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"idGuild": "{% hash 'sha1', 'hex', '' %}",
+    	"idOwner": "{% hash 'sha256', 'hex', '' %}",
+    	"schedule": "{% now 'iso-8601', '' %}",
+    	"category": "ranked",
+    	"description": "Description test",
+    	"participants": [
+    		"{% hash 'md5', 'hex', '' %}"
+    	]
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_61b3d8fadd1b4db4af9c745a4024d7dd
+authentication: {}
+metaSortKey: -1626479179235
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
