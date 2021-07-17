@@ -3,10 +3,12 @@ name: Node checkout
 on: [push]
 
 jobs:
-  node14:
-    name: Run Build and Test Node 14
+  build:
+    name: Run Build and Test
     runs-on: ubuntu-latest
-    container: node:14
+    strategy:
+      matrix:
+        node-version: [14.x, 15.x]
     services:
       postgres:
         image: postgres
@@ -17,38 +19,15 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          - 5432:5432
 
     steps:
       - uses: actions/checkout@v2
-      - run: npm ci
-      - run: npm run build
-      - run: npm test
-        env:
-          JWT_SECRET: "super-secret-jwt"
-          SECRET_SESSION: "super-secret-session"
-          DB_CLIENT: "pg"
-          DB_HOST: "postgres"
-          DB_USER: "postgres"
-          DB_PASS: "mypassword"
-          DB_NAME: "postgres"
-
-  node15:
-    name: Run Build and Test Node 14
-    runs-on: ubuntu-latest
-    container: node:15
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_PASSWORD: mypassword
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    steps:
-      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
       - run: npm ci
       - run: npm run build
       - run: npm test
