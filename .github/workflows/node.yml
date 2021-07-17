@@ -4,27 +4,30 @@ on: [push]
 
 jobs:
   build:
-    name: Run Build
+    name: Run Build and Test
     runs-on: ubuntu-latest
+    container: node
+    services:
+      postgres: 
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: mypassword
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+          
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
       - run: npm ci
       - run: npm run build
-
-  test:
-    name: Run Test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
-      - run: npm ci
       - run: npm test
         env:
           JWT_SECRET: "super-secret-jwt"
           SECRET_SESSION: "super-secret-session"
-          DB_CLIENT: "sqlite3"
+          DB_CLIENT: "pg"
+          DB_HOST: "postgres"
+          DB_USER: "postgres"
+          DB_PASS: "mypassword"
+          DB_NAME: "db"
