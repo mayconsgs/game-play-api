@@ -30,4 +30,4 @@ jobs:
           DB_HOST: "postgres"
           DB_USER: "postgres"
           DB_PASS: "mypassword"
-          DB_NAME: "db"
+          DB_NAME: "postgres"
