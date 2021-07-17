@@ -1,7 +1,7 @@
 import Joi, { ObjectSchema } from "joi";
 
 interface SchemaInterface {
-  path: string;
+  path: RegExp;
   method: "GET" | "POST" | "PUT" | "DELETE";
 
   body?: ObjectSchema;
@@ -10,7 +10,7 @@ interface SchemaInterface {
 
 const schemas: SchemaInterface[] = [
   {
-    path: "/event",
+    path: new RegExp("^/events$"),
     method: "POST",
     body: Joi.object({
       idGuild: Joi.string().required(),
@@ -19,6 +19,13 @@ const schemas: SchemaInterface[] = [
       category: Joi.string().valid("ranked", "joke", "duel"),
       description: Joi.string().max(100),
       participants: Joi.array().items(Joi.string().required()).required(),
+    }),
+  },
+  {
+    path: new RegExp("^/events/[0-9]*/add$"),
+    method: "POST",
+    body: Joi.object({
+      idUser: Joi.string().required(),
     }),
   },
 ];

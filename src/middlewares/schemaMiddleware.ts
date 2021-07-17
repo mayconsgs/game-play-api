@@ -9,7 +9,7 @@ async function schemaMiddleware(
   const path = request.path;
   const method = request.method;
 
-  const schema = schemas.find((e) => e.method == method && e.path == path);
+  const schema = schemas.find((e) => e.method == method && e.path.test(path));
 
   if (!schema) return response.status(404).send("Route not found.");
 

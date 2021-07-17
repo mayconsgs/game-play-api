@@ -1,5 +1,5 @@
 {
-  "name": "template-express-knex",
+  "name": "game-play-api",
   "version": "0.0.0",
   "description": "Template para API Node com Knex",
   "main": "src/server.ts",
@@ -14,7 +14,7 @@
     "dev": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
     "pretest": "NODE_ENV=test knex migrate:latest",
     "test": "NODE_ENV=test jest --forceExit --detectOpenHandles",
-    "posttest": "NODE_ENV=test knex migrate:rollback --all"
+    "posttest": "NODE_ENV=test knex migrate:rollback"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -24,6 +24,7 @@
     "joi": "^17.4.1",
     "knex": "^0.95.7",
     "mysql2": "^2.2.5",
+    "pg": "^8.6.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
