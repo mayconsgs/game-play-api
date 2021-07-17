@@ -35,7 +35,7 @@ jobs:
           JWT_SECRET: "super-secret-jwt"
           SECRET_SESSION: "super-secret-session"
           DB_CLIENT: "pg"
-          DB_HOST: "postgres"
+          DB_HOST: "localhost"
           DB_USER: "postgres"
           DB_PASS: "mypassword"
           DB_NAME: "postgres"
