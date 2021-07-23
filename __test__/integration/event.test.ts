@@ -33,7 +33,7 @@ describe("POST /events", () => {
   it("Deveria criar um evento com um multiplos participante e retornar seu id", (done) => {
     const participants: string[] = [];
 
-    for (let i = 0; i < Math.floor(Math.random() * 10); i++) {
+    for (let i = 0; i < 5; i++) {
       participants.push(faker.git.commitSha());
     }
 
