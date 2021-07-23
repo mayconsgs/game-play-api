@@ -22,7 +22,9 @@ const schemas: SchemaInterface[] = [
     }),
   },
   {
-    path: new RegExp("^/events/[0-9]*/add$"),
+    path: new RegExp(
+      "^/events/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/add$"
+    ),
     method: "POST",
     body: Joi.object({
       idUser: Joi.string().required(),

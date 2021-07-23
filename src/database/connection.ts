@@ -7,8 +7,6 @@ const database = knex({
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
-
-    filename: "./src/database/db.sqlite",
   },
   migrations: {
     directory: "./src/database/migrations",
@@ -16,7 +14,6 @@ const database = knex({
   seeds: {
     directory: "./src/database/seeds",
   },
-  useNullAsDefault: process.env.NODE_ENV != "test",
 });
 
 export default database;

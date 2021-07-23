@@ -1,21 +1,41 @@
 import { Request, Response } from "express";
+import { v4 as uuid } from "uuid";
 import database from "../database/connection";
+
+interface eventProps {
+  idGuild: string;
+  idOwner: string;
+  schedule: string;
+  category: string;
+  description: string;
+  participants: string[];
+}
 
 class EventController {
   async createEvent(request: Request, response: Response) {
-    const { participants, ...event } = request.body;
+    const { participants, schedule, ...event } = request.body as eventProps;
+
+    const trx = await database.transaction();
 
     try {
-      const [eventId] = await database("event").insert(event).returning("id");
+      const eventId = uuid();
+      await trx("event").insert({
+        ...event,
+        id: eventId,
+        schedule: new Date(schedule),
+      });
+
       const parts = participants.map((idUser: string) => {
         return { eventId, idUser };
       });
+      await trx("participants").insert(parts);
 
-      await database("participants").insert(parts);
+      await trx.commit();
 
       return response.status(201).json({ eventId });
     } catch (error) {
-      return response.status(409).send("Ocorreu um erro ao inserir o evento");
+      await trx.rollback();
+      return response.status(409).send("Não foi possível inserir este evento");
     }
   }
 
@@ -26,11 +46,11 @@ class EventController {
     try {
       await database("participants").insert({ eventId, idUser });
 
-      return response.status(204).send();
+      return response.status(201).json({ idUser });
     } catch (error) {
       return response
         .status(409)
-        .send("Ocorreu um error ao inserir um novo participante");
+        .send("Não foi possível adicionar esse usuário ao evento");
     }
   }
 }

@@ -12,9 +12,9 @@
     "start": "NODE_ENV=production node dist/server.js",
     "predev": "NODE_ENV=development knex migrate:latest",
     "dev": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
-    "pretest": "NODE_ENV=test knex migrate:latest",
+    "pretest": "NODE_ENV=test knex migrate:latest && NODE_ENV=test knex seed:run",
     "test": "NODE_ENV=test jest --forceExit --detectOpenHandles",
-    "posttest": "NODE_ENV=test knex migrate:rollback"
+    "posttest": "NODE_ENV=test knex migrate:rollback --all"
   },
   "dependencies": {
     "cors": "^2.8.5",

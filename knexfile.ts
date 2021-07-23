@@ -9,8 +9,6 @@ module.exports = {
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
-
-    filename: "./src/database/db.sqlite",
   },
   migrations: {
     directory: "./src/database/migrations",
@@ -18,5 +16,4 @@ module.exports = {
   seeds: {
     directory: "./src/database/seeds",
   },
-  useNullAsDefault: process.env.NODE_ENV != "test",
 };

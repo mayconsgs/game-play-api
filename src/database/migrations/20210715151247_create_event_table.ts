@@ -2,7 +2,7 @@ import { Knex } from "knex";
 
 export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable("event", (table) => {
-    table.increments().primary();
+    table.uuid("id").primary();
     table.string("idGuild").notNullable();
     table.string("idOwner").notNullable();
     table.dateTime("schedule").notNullable();

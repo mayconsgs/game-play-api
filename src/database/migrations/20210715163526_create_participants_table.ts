@@ -2,9 +2,8 @@ import { Knex } from "knex";
 
 export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable("participants", (table) => {
-    table.integer("eventId").notNullable().unsigned();
+    table.uuid("eventId").notNullable();
     table.string("idUser").notNullable();
-
     table
       .foreign("eventId")
       .references("id")
