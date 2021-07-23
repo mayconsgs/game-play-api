@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        containers-node: [node:14, node:15]
+        containers-node: ['node:14', 'node:15']
         
     container: ${{matrix.containers-node}}
     services:
