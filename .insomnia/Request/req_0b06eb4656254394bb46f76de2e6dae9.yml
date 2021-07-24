@@ -1,0 +1,31 @@
+_id: req_0b06eb4656254394bb46f76de2e6dae9
+type: Request
+parentId: wrk_3add7e390f9049039818d2909f7912ca
+modified: 1627169523870
+created: 1626479998922
+url: "{{ _.baseUrl }}/events/{% response 'body',
+  'req_7ea60bf8ed01404a8b6435f0dca930bb', 'b64::JC5ldmVudElk::46b',
+  'no-history', 60 %}/participants"
+name: Add part on event
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"idUser": "{% hash 'sha1', 'hex', _.time %}"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_b746e4275f6c465fbd80d3a32066fc81
+authentication: {}
+metaSortKey: -1626479999018
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

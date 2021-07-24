@@ -1,0 +1,23 @@
+_id: req_1439ce2e41d84a3dac9e6a3be9bf8f8f
+type: Request
+parentId: wrk_3add7e390f9049039818d2909f7912ca
+modified: 1627163449551
+created: 1627163412334
+url: "{{ _.baseUrl }}/events/{% response 'body',
+  'req_7ea60bf8ed01404a8b6435f0dca930bb', 'b64::JC5ldmVudElk::46b',
+  'no-history', 60 %}/participants"
+name: Get participants of event
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1627163412334
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
