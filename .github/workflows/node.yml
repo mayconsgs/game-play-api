@@ -1,6 +1,8 @@
 name: Node checkout
 
-on: [push]
+on:
+  push:
+    branches: ["main", "develop"]
 
 jobs:
   build:
@@ -8,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        containers-node: ['node:14', 'node:15']
-        
+        containers-node: ["node:14", "node:15"]
+
     container: ${{matrix.containers-node}}
     services:
       postgres:
@@ -21,10 +23,10 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-          
+
     steps:
       - uses: actions/checkout@v2
-      
+
       - run: npm ci
       - run: npm run build
       - run: npm test

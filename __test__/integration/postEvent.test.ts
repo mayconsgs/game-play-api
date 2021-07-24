@@ -3,10 +3,9 @@ import supertest from "supertest";
 import { v4 as uuid } from "uuid";
 import app from "../../src/app";
 
-const request = supertest(app);
-
 describe("POST /events", () => {
-  const testEventId = "c8fbfaf9-4971-4a35-a21e-b9d87780e342";
+  const request = supertest(app);
+  const eventId = "c8fbfaf9-4971-4a35-a21e-b9d87780e342";
 
   it("Deveria criar um evento com um unico participante e retornar seu id", (done) => {
     const participants = [faker.git.commitSha()];
@@ -71,12 +70,12 @@ describe("POST /events", () => {
     request.post("/events").send(event).expect(422).end(done);
   });
 
-  describe("/:eventId/add", () => {
+  describe("/:eventId/participants", () => {
     it("Deveria adicionar um participante a um evento", (done) => {
       const idUser = faker.git.commitSha();
 
       request
-        .post(`/events/${testEventId}/add`)
+        .post(`/events/${eventId}/participants`)
         .send({ idUser })
         .expect(201)
         .expect((response) => {
@@ -89,7 +88,7 @@ describe("POST /events", () => {
       const idUser = faker.git.commitSha();
 
       request
-        .post(`/events/${uuid()}/add`)
+        .post(`/events/${uuid()}/participants`)
         .send({ idUser })
         .expect(409)
         .end(done);
@@ -99,7 +98,7 @@ describe("POST /events", () => {
       const idUser = Math.floor(Math.random() * 10000);
 
       request
-        .post(`/events/${testEventId}/add`)
+        .post(`/events/${eventId}/participants`)
         .send({ idUser })
         .expect(422)
         .end(done);
@@ -109,7 +108,7 @@ describe("POST /events", () => {
       const idUser = Math.floor(Math.random() * 10000);
 
       request
-        .post(`/events/asdasdasdasdasdasd/add`)
+        .post(`/events/asdasdasdasdasdasd/participants`)
         .send({ idUser })
         .expect(404)
         .end(done);

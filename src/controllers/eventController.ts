@@ -53,6 +53,34 @@ class EventController {
         .send("Não foi possível adicionar esse usuário ao evento");
     }
   }
+
+  async getEventFromUser(request: Request, response: Response) {
+    const { idUser } = request.query;
+
+    const events = await database({ e: "event" })
+      .select(
+        "idGuild",
+        "idOwner",
+        "schedule",
+        "category",
+        "description",
+        "eventId"
+      )
+      .innerJoin({ p: "participants" }, "p.eventId", "e.id")
+      .where({ idUser });
+
+    return response.json(events);
+  }
+
+  async getParticipantsOfEvent(request: Request, response: Response) {
+    const { eventId } = request.params;
+
+    const participants = await database("participants")
+      .select("idUser")
+      .where({ eventId });
+
+    return response.json(participants);
+  }
 }
 
 export const eventController = new EventController();

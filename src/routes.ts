@@ -1,13 +1,18 @@
 import { eventController } from "@controllers/eventController";
 import { Router } from "express";
 
-const publicRoutes = Router();
-const privateRoutes = Router();
+const routes = Router();
 
-publicRoutes.post("/events", eventController.createEvent);
-publicRoutes.post(
-  "/events/:eventId/add",
+routes.post("/events", eventController.createEvent);
+routes.post(
+  "/events/:eventId/participants",
   eventController.addParticipantToEvent
 );
 
-export { privateRoutes, publicRoutes };
+routes.get("/events", eventController.getEventFromUser);
+routes.get(
+  "/events/:eventId/participants",
+  eventController.getParticipantsOfEvent
+);
+
+export { routes };

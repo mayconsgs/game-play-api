@@ -11,6 +11,13 @@ interface SchemaInterface {
 const schemas: SchemaInterface[] = [
   {
     path: new RegExp("^/events$"),
+    method: "GET",
+    query: Joi.object({
+      idUser: Joi.string().required(),
+    }),
+  },
+  {
+    path: new RegExp("^/events$"),
     method: "POST",
     body: Joi.object({
       idGuild: Joi.string().required(),
@@ -23,12 +30,18 @@ const schemas: SchemaInterface[] = [
   },
   {
     path: new RegExp(
-      "^/events/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/add$"
+      "^/events/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/participants$"
     ),
     method: "POST",
     body: Joi.object({
       idUser: Joi.string().required(),
     }),
+  },
+  {
+    path: new RegExp(
+      "^/events/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/participants$"
+    ),
+    method: "GET",
   },
 ];
 

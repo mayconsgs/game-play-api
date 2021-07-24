@@ -4,6 +4,8 @@ export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable("participants", (table) => {
     table.uuid("eventId").notNullable();
     table.string("idUser").notNullable();
+    table.timestamps(true, true);
+
     table
       .foreign("eventId")
       .references("id")
