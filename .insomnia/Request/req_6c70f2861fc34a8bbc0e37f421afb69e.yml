@@ -1,0 +1,28 @@
+_id: req_6c70f2861fc34a8bbc0e37f421afb69e
+type: Request
+parentId: wrk_3add7e390f9049039818d2909f7912ca
+modified: 1627169489537
+created: 1627162799540
+url: "{{ _.baseUrl }}/events"
+name: Get Events from User ID
+description: ""
+method: GET
+body: {}
+parameters:
+  - name: idUser
+    value: "{% response 'body', 'req_0b06eb4656254394bb46f76de2e6dae9',
+      'b64::JC5pZFVzZXI=::46b', 'no-history', 60 %}"
+    description: ""
+    id: pair_3afd9ccada9a439aadce71244fb7fcfb
+    type: text
+    multiline: false
+headers: []
+authentication: {}
+metaSortKey: -1627162799540
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
