@@ -9,7 +9,7 @@ routes.post(
   eventController.addParticipantToEvent
 );
 
-routes.get("/events", eventController.getEventFromUser);
+routes.get("/events", eventController.indexEvents);
 routes.get(
   "/events/:eventId/participants",
   eventController.getParticipantsOfEvent

@@ -12,6 +12,29 @@ interface eventProps {
 }
 
 class EventController {
+  async indexEvents(request: Request, response: Response) {
+    const { idUser, guilds } = request.query;
+
+    try {
+      const events = await database({ e: "event" })
+        .select(
+          "eventId",
+          "idGuild",
+          "idOwner",
+          "schedule",
+          "category",
+          "description"
+        )
+        .innerJoin({ p: "participants" }, "p.eventId", "e.id")
+        .where(idUser ? { idUser } : true)
+        .whereIn("idGuild", guilds as string[]);
+
+      return response.json(events);
+    } catch (error) {
+      return response.status(409).send("Não listar os eventos");
+    }
+  }
+
   async createEvent(request: Request, response: Response) {
     const { participants, schedule, ...event } = request.body as eventProps;
 
@@ -39,6 +62,15 @@ class EventController {
     }
   }
 
+  async getParticipantsOfEvent(request: Request, response: Response) {
+    const { eventId } = request.params;
+
+    const participants = await database("participants")
+      .select("idUser")
+      .where({ eventId });
+
+    return response.json(participants);
+  }
   async addParticipantToEvent(request: Request, response: Response) {
     const { eventId } = request.params;
     const { idUser } = request.body;
@@ -52,34 +84,6 @@ class EventController {
         .status(409)
         .send("Não foi possível adicionar esse usuário ao evento");
     }
-  }
-
-  async getEventFromUser(request: Request, response: Response) {
-    const { idUser } = request.query;
-
-    const events = await database({ e: "event" })
-      .select(
-        "idGuild",
-        "idOwner",
-        "schedule",
-        "category",
-        "description",
-        "eventId"
-      )
-      .innerJoin({ p: "participants" }, "p.eventId", "e.id")
-      .where({ idUser });
-
-    return response.json(events);
-  }
-
-  async getParticipantsOfEvent(request: Request, response: Response) {
-    const { eventId } = request.params;
-
-    const participants = await database("participants")
-      .select("idUser")
-      .where({ eventId });
-
-    return response.json(participants);
   }
 }
 

@@ -13,7 +13,8 @@ const schemas: SchemaInterface[] = [
     path: new RegExp("^/events$"),
     method: "GET",
     query: Joi.object({
-      idUser: Joi.string().required(),
+      idUser: Joi.string(),
+      guilds: Joi.array().items(Joi.string()).required(),
     }),
   },
   {
