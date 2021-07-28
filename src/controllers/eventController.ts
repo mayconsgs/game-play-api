@@ -15,6 +15,10 @@ class EventController {
   async indexEvents(request: Request, response: Response) {
     const { idUser, guilds } = request.query;
 
+    const isArray = guilds instanceof Array;
+
+    console.log("As array? " + isArray);
+
     try {
       const events = await database({ e: "event" })
         .select(
@@ -27,8 +31,15 @@ class EventController {
         )
         .innerJoin({ p: "participants" }, "p.eventId", "e.id")
         .where(idUser ? { idUser } : true)
-        .whereIn("idGuild", guilds as string[]);
-
+        .where(
+          isArray
+            ? function () {
+                this.whereIn("idGuild", guilds as string[]);
+              }
+            : function () {
+                this.where("idGuild", guilds as string);
+              }
+        );
       return response.json(events);
     } catch (error) {
       return response.status(409).send("Não listar os eventos");

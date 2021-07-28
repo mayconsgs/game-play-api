@@ -11,7 +11,7 @@ export async function seed(knex: Knex): Promise<void> {
   const events = [
     {
       id: "c8fbfaf9-4971-4a35-a21e-b9d87780e342",
-      idGuild: faker.git.commitSha(),
+      idGuild: "e45eac5bef762947db7970a1855256e34ee89523",
       idOwner: faker.git.commitSha(),
       schedule: new Date(faker.date.future()),
       category: "ranked",

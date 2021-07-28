@@ -14,7 +14,10 @@ const schemas: SchemaInterface[] = [
     method: "GET",
     query: Joi.object({
       idUser: Joi.string(),
-      guilds: Joi.array().items(Joi.string()).required(),
+      guilds: Joi.alternatives().try(
+        Joi.array().items(Joi.string()).required(),
+        Joi.string().required()
+      ),
     }),
   },
   {
