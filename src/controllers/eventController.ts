@@ -12,12 +12,9 @@ interface eventProps {
 }
 
 class EventController {
-  async indexEvents(request: Request, response: Response) {
+  async index(request: Request, response: Response) {
     const { idUser, guilds } = request.query;
-
     const isArray = guilds instanceof Array;
-
-    console.log("As array? " + isArray);
 
     try {
       const events = await database({ e: "event" })
@@ -42,11 +39,11 @@ class EventController {
         );
       return response.json(events);
     } catch (error) {
-      return response.status(409).send("Não listar os eventos");
+      return response.status(409).send("Não foi possível listar os eventos");
     }
   }
 
-  async createEvent(request: Request, response: Response) {
+  async create(request: Request, response: Response) {
     const { participants, schedule, ...event } = request.body as eventProps;
 
     const trx = await database.transaction();
@@ -70,30 +67,6 @@ class EventController {
     } catch (error) {
       await trx.rollback();
       return response.status(409).send("Não foi possível inserir este evento");
-    }
-  }
-
-  async getParticipantsOfEvent(request: Request, response: Response) {
-    const { eventId } = request.params;
-
-    const participants = await database("participants")
-      .select("idUser")
-      .where({ eventId });
-
-    return response.json(participants);
-  }
-  async addParticipantToEvent(request: Request, response: Response) {
-    const { eventId } = request.params;
-    const { idUser } = request.body;
-
-    try {
-      await database("participants").insert({ eventId, idUser });
-
-      return response.status(201).json({ idUser });
-    } catch (error) {
-      return response
-        .status(409)
-        .send("Não foi possível adicionar esse usuário ao evento");
     }
   }
 }
